@@ -38,7 +38,7 @@ jobs:
       id: build_image
       with:
        base_image: raspios_lite_arm64:latest
-       commands: apt update -y && apt install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev zip && mkdir build && cd build && cmake .. && make && mkdir kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux && mv xmrig kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux && zip -r kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux.zip kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux
+       commands: apt update -y && apt install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev zip && ls && mkdir build && cd build && cmake .. && make && mkdir kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux && mv xmrig kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux && zip -r kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux.zip kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with: 
