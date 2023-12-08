@@ -24,7 +24,7 @@ jobs:
        - name: build
          run: mkdir build && cd build && cmake .. && make
        - name: zip 
-         run: cd build && mkdir kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux && mv xmrig kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux && zip -r kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux
+         run: cd build && mkdir kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux && mv xmrig kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux && zip -r kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux.zip kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux
        - name: Release
          uses: softprops/action-gh-release@v1
          if: startsWith(${{ github.event.head_commit.message }}, 'v*)
