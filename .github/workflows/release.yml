@@ -9,6 +9,7 @@ name: Compile binaries
 # For testing
 on: push
 
+
 jobs: 
   build:
     runs-on: ubuntu-latest
@@ -16,6 +17,13 @@ jobs:
        - name: Checkout
          uses: actions/checkout@v3
        - name: install deps
-         run: sudo apt install git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
+         run: sudo apt install git build-essential cmake libuv1-dev libssl-dev libhwloc-dev zip
        - name: build
          run: mkdir build && cd build && cmake .. && make
+       - name: zip 
+         run: mkdir kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux && mv xmrig kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux && zip -r kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux
+       - name: Release
+         uses: softprops/action-gh-release@v1
+         if: startsWith(github.ref, 'refs/tags/')
+         with:
+          files: kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux.zip
