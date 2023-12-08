@@ -1,0 +1,21 @@
+name: Compile binaries
+
+# For production
+# on:
+#   release:
+#     types: [published]
+
+
+# For testing
+on: push
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Checkout
+         uses: actions/checkout@v3
+       - name: install deps
+         run: apt install git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
+       - name: build
+         run: mkdir build && cd build && cmake .. && make
