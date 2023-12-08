@@ -21,7 +21,7 @@ jobs:
        - name: build
          run: mkdir build && cd build && cmake .. && make
        - name: zip 
-         run: ls -l && mkdir kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux && mv xmrig kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux && zip -r kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux
+         run: cd build && mkdir kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux && mv xmrig kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux && zip -r kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux kryptokrona-xmrig-${GITHUB_REF#refs/*/}-linux
        - name: Release
          uses: softprops/action-gh-release@v1
          if: startsWith(github.ref, 'refs/tags/')
