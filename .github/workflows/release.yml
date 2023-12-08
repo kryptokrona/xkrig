@@ -41,7 +41,7 @@ jobs:
        commands: |
         apt update -y  
         apt install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev zip  
-        ls
+        cd xmrig
         mkdir build  
         cd build  
         cmake .. 
