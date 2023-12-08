@@ -16,6 +16,6 @@ jobs:
        - name: Checkout
          uses: actions/checkout@v3
        - name: install deps
-         run: apt install git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
+         run: sudo apt install git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
        - name: build
          run: mkdir build && cd build && cmake .. && make
