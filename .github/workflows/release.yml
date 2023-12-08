@@ -30,4 +30,4 @@ jobs:
          if: startsWith(${{ github.event.head_commit.message }}, 'v*)
          with:
           tag_name: ${{ github.event.head_commit.message }}
-          files: kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux.zip
+          files: build/kryptokrona-xmrig-${{ github.event.head_commit.message }}-linux.zip
