@@ -1,0 +1,72 @@
+name: Compile binaries
+
+# For production
+# on:
+#   release:
+#     types: [published]
+
+
+# For testing
+on: 
+  push:
+    branches:
+      - master
+
+
+jobs: 
+  build_on_x86:
+   runs-on: ubuntu-latest
+   steps:
+       - name: Checkout
+         uses: actions/checkout@v3
+       - name: install deps
+         run: sudo apt install git build-essential cmake libuv1-dev libssl-dev libhwloc-dev zip
+       - name: build
+         run: mkdir build && cd build && cmake .. && make
+       - name: zip 
+         run: cd build && mkdir kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux && mv xmrig kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux && zip -r kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux.zip kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux
+       - name: Upload artifact
+         uses: actions/upload-artifact@v3
+         with: 
+          name: kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux
+          path: build/kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux.zip
+  
+  build_on_arm64: 
+    runs-on: ubuntu-latest
+    steps:
+    - uses: pguyot/arm-runner-action@v2
+      id: build_image
+      with:
+       base_image: raspios_lite_arm64:latest
+       commands: |
+        apt update -y  
+        apt install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev zip  
+        cd xmrig
+        mkdir build  
+        cd build  
+        cmake .. 
+        make 
+        mkdir kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux 
+        mv xmrig kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux 
+        zip -r kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux.zip kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with: 
+        name: kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux
+        path: build/kryptokrona-xmrig-${{ github.event.head_commit.message }}-$(uname -m)-linux.zip
+      
+  release:
+    runs-on: ubuntu-latest
+    needs: [build_on_x86, build_on_arm64]
+    steps:
+      - name: download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: kryptokrona-xmrig-*
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(${{ github.event.head_commit.message }}, 'v*)
+        with:
+           tag_name: ${{ github.event.head_commit.message }}
+           files: build/kryptokrona-xmrig-*
+ 
