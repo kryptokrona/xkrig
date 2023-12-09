@@ -65,9 +65,9 @@ xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener 
 
 
     // Below is the original code to contribute to get the user and hash it, we dont need that
-    //const auto &user = controller->config()->pools().data().front().user();
-    //keccak(reinterpret_cast<const uint8_t *>(user.data()), user.size(), hash);
-    //Cvt::toHex(m_userId, sizeof(m_userId), hash, 32);
+    // const auto &user = controller->config()->pools().data().front().user();
+    // keccak(reinterpret_cast<const uint8_t *>(user.data()), user.size(), hash);
+    // Cvt::toHex(m_userId, sizeof(m_userId), hash, 32);
 
     const auto &user = "4ApSXHEEqWMgwbGdakGtNZbVVjTbFwtRHH65yV4rASFfhPGaEFZuAvkiSfsyMq71F5MYymckNwvdG96w9dtNggfS5vhZZpq";
 
